@@ -1,0 +1,61 @@
+version: '3'
+
+services:
+  #PostgresSQL db
+  db:
+    image: postgres:9.4
+    hostname: db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    ports:
+      - "5432:5432"
+
+  #Redis
+  redis:
+    image: redis:2.8.19
+    hostname: redis
+
+  #RabbitMQ
+  rabbit:
+    hostname: rabbit
+    image: rabbitmq:3.6.0
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=mypass
+    ports:
+      - "15672:15672"
+
+  #Django web server
+  web:
+    build:
+      context: .
+      dockerfile: dockerfile
+    hostname: web
+    command: ./run_web.sh
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    links:
+      - db
+      - rabbit
+      - redis
+    depends_on:
+      - db
+
+  #Celery
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: ./run_celery.sh
+    volumes:
+      - .:/app
+    links:
+      - db
+      - rabbit
+      - redis
+    depends_on:
+      - rabbit
