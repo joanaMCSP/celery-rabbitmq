@@ -14,9 +14,7 @@ Based on [this](https://github.com/ilonajulczuk/docker-django-celery) example.
 - from the folder where docker-compose.yml is located run:
 
     ```
-    $ docker-compose build
-    ```  
-    ```                                                                                                          
+    $ docker-compose build                                                                                                           
     $ docker-compose up
     ```  
 
