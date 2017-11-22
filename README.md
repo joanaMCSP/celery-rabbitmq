@@ -17,9 +17,7 @@ Based on [this](https://github.com/ilonajulczuk/docker-django-celery) example.
     $ docker-compose build                                                                                                           
     $ docker-compose up
     ```  
-
-
-- access API at localhost:8000 to schedule tasks
+- access the browsable API at 127.0.0.1:8000 and go to 127.0.0.1:8000/jobs/ to start tasks
 
 ### Available tasks ###
 - map_url - takes a url as a string and parses its content using Beautiful soup, returning a
@@ -30,4 +28,4 @@ Based on [this](https://github.com/ilonajulczuk/docker-django-celery) example.
 ### TODOS: ###
 * write tests
 * experiment with additional long-running tasks
-* experiment scaling with more container instances
+* experiment scaling with more container instances for celery workers
